@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+/*각 버튼을 누르면 현재 주식 가격을 가져온다*/
+/*현재 주식 가격을 가져오려면 웹 크롤링이 필요하다 : Node.js , axios, cheerio를 이용해 크롤러 구현 가능*/
+function getHTML(name){
+alert('this stock is '+name+' now');
+
+}
+
+/*var stockClass = document.getElementByClassName("stock");
+console.log(stockClass);
+stockClass.addEventListener('click', function(event){
+	alert(this);
+	//getStockNow()
+})*/
+
+// axios를 활용해 ajax로 html 문서를 가져오는 함수 구현
+/*async function sendAjax(stock){
+	var stock = await getStockNow(stock);
+
+	
+	axios({
+		url:'/stock',
+		method:'post',
+		data: {
+			data: stock
+		}
+	});
+}*/
+
+// 사용자가 누른 getStockNow() 함수를 정의한다
+// ajax로 주식 정보(카카오)를 담아 서버로 요청한다
+// 서버에서 웹크롤링을 통해 결과를 얻어내고 결과값을 리턴한다
+// 서버가 주는 답변을 기다리다가 리턴값을 받으면 그걸 화면에 띄워준다
+$(document).ready(function(){
+	$('#kakao').click(function(){
+		console.log("async.await");
+		var stock = 'kakao';
+		//ajax 요청
+		$.ajax({
+			url:'/stock',
+			dataType:'json',
+			type:'post',
+			data: {data:stock},
+			success: function(result){
+				$('#result').html(result.result);
+			}
+		});
+		console.log("ajax요청");
+	});	
+});
+
+</script>
+
+<html>
+<head>
+	<title>how much stock</title>
+</head>
+
+<body>
+	<button class="stock" id="celltrion" onclick="getHTML('celltrio');">celltrio</button>
+	<!-- <button class="stock" id="kakao" onclick="getStockNow(this.id);"> -->
+	<button class="stock" id="kakao">
+		kakao
+	</button>
+	<br>
+	<div id="result">stock is now : </div>
+</body>
+</html>
+
+
